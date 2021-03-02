@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: aion-instant-kanban-delivery
+  name: aion-instant-kanban-delivery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: aion-instant-kanban-delivery
+  strategy:
+    rollingUpdate:
+  template:
+    metadata:
+      labels:
+        run: aion-instant-kanban-delivery
+    spec:
+      hostname: aion-instant-kanban-delivery
+      containers:
+        - name: aion-instant-kanban-delivery
+          tty: true
+          image: latonaio/aion-instant-kanban-delivery:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: IS_DEBUG
+              value: "false"
+          ports:
+            - containerPort: 1323
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: aion-instant-kanban-delivery
+  name: aion-instant-kanban-delivery
+spec:
+  selector:
+    run: aion-instant-kanban-delivery
+  type: NodePort
+  ports:
+    - port: 1323
+      protocol: TCP
+      targetPort: 1323
+      nodePort: 30111
+---
