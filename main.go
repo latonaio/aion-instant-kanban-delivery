@@ -25,6 +25,7 @@ func main()  {
 	// ルーティング
 	e.POST("/kanban/set",controller.SetKanban)
 	e.POST("/kanban/write",controller.WriteKanban)
+	e.POST("/kanban/close",controller.CloseKanban)
 
 	err = e.Start(":1323")
 	if err != nil {

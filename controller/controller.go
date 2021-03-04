@@ -46,3 +46,10 @@ func WriteKanban(c echo.Context) error {
 
 	return c.JSON(http.StatusOK,"OK")
 }
+
+func CloseKanban(c echo.Context) error {
+	if err := kanban.KanbanClient().Close();err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK,"OK")
+}
